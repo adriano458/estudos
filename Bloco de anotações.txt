@@ -1,0 +1,51 @@
+comandos:
+
+CD (local) --> cd descktop/
+//Esse comanado irá abrir o local descktop que é a pasta.
+
+mkdir (nome da pasta) && cd (entrar na pasta) --> mkdir exercicios-js && cd exercicios-js
+//mkdir irá criar uma pasta.
+//&& junção ou conjunto do comando.
+//cd entrar na pasta que foi criada.
+
+code .
+//Acessar o vscode, com chamando a pasta que foi criada.
+
+''Estudar o padrão observer para o javascript''
+
+
+//Configurar nome:
+git config --global user.name "José Adriano"
+
+//Configrar e-mail:
+git config --global user.email "ja.458@hotmail.com"
+
+//Clonar repositorio no github
+git clone (http do repositorio)
+
+//listar arquivos não monitorados. Primeiro passo
+git status
+
+//Adicionar arquivos não monitorados
+git add . (ponto significar adicionar tudo)
+
+//Comitar para monitoramento das alterações
+git commit -m "(descrição)"
+
+//Retirar o arquivo de monitoramento
+git restore (nome do arquivo) 
+
+//Enviar os arquivos para o repositório
+git push origin main
+
+Atualizar os arquivos na maquina que está no repositório
+git pull origin main
+
+//Verificar a listar de configurações do Git
+git config --list
+
+//Após criar uma pasta, sempre inicilizar.
+git init
+
+//Verificar o que está monitorando
+ls -la
