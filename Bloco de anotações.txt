@@ -36,10 +36,10 @@ git commit -m "(descrição)"
 git restore (nome do arquivo) 
 
 //Enviar os arquivos para o repositório
-git push origin main
+git push origin (main ou master)
 
 Atualizar os arquivos na maquina que está no repositório
-git pull origin main
+git pull origin (main ou  master)
 
 //Verificar a listar de configurações do Git
 git config --list
@@ -49,3 +49,6 @@ git init
 
 //Verificar o que está monitorando
 ls -la
+
+//Verificar o branch que esta mexendo (main ou master)
+git branch
