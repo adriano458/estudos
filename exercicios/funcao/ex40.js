@@ -2,7 +2,7 @@
 * atribuído o conceito D, de 5,0 a 6,9 seja atribuído o conceito C, de 7,0 a 8,9 o conceito B e de 9,0 a 10,0 o conceito A. */
 
 function conceitos ( vetor ){
-    for(let i = 0; i < vetor.length; i++){
+    for( let i = 0; i < vetor.length; i++ ){
         if (vetor[i] >= 0 && vetor[i] <= 4.9){
             return console.log(`${vetor[i]} - D`)
         }else if ( vetor[i] >= 5 && vetor[i] <= 6.9){
