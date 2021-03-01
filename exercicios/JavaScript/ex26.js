@@ -1,0 +1,16 @@
+/* Desenvolva uma função que receba uma string como parâmetro e retorne essa string somente com as
+consoantes, ou seja, sem as vogais.
+Exemplos:
+removerVogais("Cod3r") // retornará "Cd3r"
+removerVogais("Fundamentos") // retornará "Fndmnts" */
+
+function removerVogais ( frase ){
+    const vogais = ['a', 'e', 'i', 'o', 'u']
+
+    vogais.forEach( vogal => frase = frase.replace(vogal, ''))
+
+    return frase
+}
+
+console.log(removerVogais("Cod3r"))
+console.log(removerVogais("Fundamentos"))
