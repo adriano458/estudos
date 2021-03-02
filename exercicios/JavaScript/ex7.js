@@ -24,3 +24,13 @@ console.log(estaEntre(3, 150, 3, true))
     return numero > minimo && numero < maximo
     }
     */
+
+function iRRF ( salario,  inss ) {
+    const baseCalculo = salario - inss
+
+    if( baseCalculo >= 1903.99 && baseCalculo <= 2826.65 ){
+        return (baseCalculo * 0.075) - 142.80
+    }
+}
+
+console.log(iRRF(2750, 247.40))
