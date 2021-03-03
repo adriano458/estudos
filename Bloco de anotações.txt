@@ -52,3 +52,11 @@ ls -la
 
 //Verificar o branch que esta mexendo (main ou master)
 git branch
+
+//baixar os arquivos node modules, diretamente no terminal git ou Code, dentro da pasta que deseja o download.
+npm i lodash
+
+// Usando o nodemon que executa o node no terminal do Windows ou code.
+npm i -g nodemon
+// para executar o arquivo.
+nodemon "arquivo.js"
