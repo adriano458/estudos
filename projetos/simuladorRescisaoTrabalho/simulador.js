@@ -17,6 +17,28 @@ function simulador ( ultSalario, dataInicio, dataFinal, motivo, ferias, aviso ){
     }
 }
 
+//Calcular aviso Previo
+function avisoPrevio ( dataIn, dataFim, salario ){
+    const date1 = new Date(dataIn)
+    const date2 = new Date(dataFim);
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+
+    if( diffDays >= 365){
+        const anos = diffDays / 365
+        const salarioAodia = salario / 30
+        var valorAviso = 0
+
+        for (let i = 0; i < anos.toFixed(0); i++){
+            valorAviso += salarioAodia*3
+        }
+    } else {
+        return valorAviso = 0
+    }
+
+    return valorAviso
+}
+
 function ajusteData ( data ){
     const dataSplit = data.split('/')
 
@@ -27,6 +49,29 @@ function ajusteData ( data ){
     let data1 = new Date(ano, mes - 1, dia)
 
     return data1
+}
+
+//Calcular o décimo terceiro
+function decimoTerceiro( dataFim, salario){
+    const dtFim = dataFim.split('/')
+
+    if( dtFim[0] > 15){
+        const mesesTrabalhado = (salario / 12) * dtFim[1]
+        
+        return mesesTrabalhado
+    } else{
+        const mesesTrabalhado = ((salario / 12) * (dtFim[1] - 1))
+
+        return mesesTrabalhado
+    }
+}
+
+// Calcular Salario de dias trabalho no mês
+function salarioDia ( dataFim, salario ){
+    const data = dataFim.split('/')
+    const salarioDiasTRabalhado = (salario / 30) * data[0]
+
+    return salarioDiasTRabalhado
 }
 
 //Identificar o motivo de desligamento
@@ -55,7 +100,7 @@ function motivoDesligamento ( motivo ){
     }
 }
 
-motivoDesligamento('Pedido de Demissão')
+//motivoDesligamento('Pedido de Demissão')
 
 // Função para calcular INSS
 function inss ( salario ) {
