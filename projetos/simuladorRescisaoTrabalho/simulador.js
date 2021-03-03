@@ -29,6 +29,34 @@ function ajusteData ( data ){
     return data1
 }
 
+//Identificar o motivo de desligamento
+function motivoDesligamento ( motivo ){
+    switch ( motivo ){
+        case 'Pedido de Demissão':
+            console.log('Pedido')
+            break
+        case 'Dispensa sem justa causa':
+            console.log('Sem justa causa')
+            break
+        case 'Dispensa com justa causa':
+            console.log('Com justa causa')
+            break
+        case 'Término de Contrato de experiência':
+            console.log('Término de contrato')
+            break
+        case 'Rescisão antecipada do contrato de experiência pelo empregador':
+            console.log('Antecipada pelo empregador')
+            break
+        case 'Rescisão antecipada do contrato de experiência pelo empregado':
+            console.log('Antecipada pelo empregado')
+            break
+        default:
+            console.log('Motivo informado incorretamente!')
+    }
+}
+
+motivoDesligamento('Pedido de Demissão')
+
 // Função para calcular INSS
 function inss ( salario ) {
     let inss = 0
@@ -61,6 +89,6 @@ function irrf ( salario, inss ) {
     return irrf
 }
 
-console.log(irrf(4040, inss(4040)))
+//console.log(irrf(4040, inss(4040)))
 
 //console.log(simulador(2650, '01/06/2020', '25/02/2021', 'Sem justa causa', false, false))
