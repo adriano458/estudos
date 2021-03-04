@@ -1,0 +1,1 @@
+Realizar um pequeno projeto que pesquise sexo feminino, nacionalidade chinesa e com o menor salario.
