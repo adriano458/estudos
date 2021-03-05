@@ -60,3 +60,12 @@ npm i lodash
 npm i -g nodemon
 // para executar o arquivo.
 nodemon "arquivo.js"
+
+//Criar arquivo package.json direto no terminal
+npm init
+
+//Caso não queira preecher, irá marcar yes para todos
+npm init -y
+
+//criando dependencias
+npm i --save axios
