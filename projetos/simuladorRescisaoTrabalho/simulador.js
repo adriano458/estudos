@@ -6,15 +6,57 @@
 * Observação: É necessário incluir impressão em PDF e com a informação bem clara, que o resultado não é oficial, apenas uma base de simulação
 * e não se torna documento oficial */
 
-function simulador ( ultSalario, dataInicio, dataFinal, motivo, ferias, aviso ){
-    if(ajusteData(dataFinal) <= ajusteData(dataInicio)){
-        return 'Desculpe! A data do desligamento é menor que a data de início!'
-    } else {
-        const dia = ajusteData(dataFinal)
-        const dia2 = ajusteData(dataInicio)
-        const diasTrabalhado = dia.getTime() - dia2.getTime()
-        return Date(diasTrabalhado)
+//Receber as variaveis
+const ultimoSalario = 4040
+const dataInicio = '01/06/2020'
+const dataFim = '06/03/2021'
+const motivo = 'Sem justa causa'
+const ferias = false
+const aviso = false
+
+//Calcular férias
+function feriasProporcionais( dataIn, dataFim, salario ) {
+    const dataInSplit = dataIn.split('/')
+    const dataFimSplit = dataFim.split('/')
+
+    const diaIn = Number(dataInSplit[0])
+    const mesIn = Number(dataInSplit[1])
+    const diaFim = Number(dataFimSplit[0])
+    const mesFim = Number(dataFimSplit[1])
+    let dias = 0
+    let meses = 0
+    let salarioReceber = 0
+
+    //Calcular dias
+    if ( diaIn > diaFim ){
+        dias = (30 - diaIn) + diaFim
+    }else if( diaIn === diaFim ){
+        dias = 30
+    }else {
+        dias = diaFim - diaIn
     }
+
+    //Calcular mes
+    if ( mesIn > mesFim ){
+        meses = (12 - mesIn) +  mesFim
+    }else if( mesIn === mesFim ){
+        meses = 0
+    }else {
+        meses = mesFim - mesIn
+    }
+
+    //Calcular o valor de férias
+    if ( dias >= 14 && meses >= 1 && meses <= 11 ){
+        salarioReceber = (((meses + 1) /12) * 30) * (salario / 30)
+    } else if ( dias < 14 && meses >= 1 && meses <= 11 ){
+        salarioReceber = ((meses / 12) * 30) * (salario / 30)
+    } else if ( dias >= 14 && meses == 0 ){
+        salarioReceber = (salario / 12) * 1
+    } else if ( dias < 14 && meses == 0 ){
+        salarioReceber = 0
+    }
+
+    return console.log(`dias: ${dias}, Meses: ${meses}, Salario: ${salarioReceber}`)
 }
 
 //Calcular aviso Previo
@@ -35,7 +77,6 @@ function avisoPrevio ( dataIn, dataFim, salario ){
     } else {
         return valorAviso = 0
     }
-
     return valorAviso
 }
 

@@ -1,0 +1,14 @@
+EVENTO				REF.	PROVENTO	DESCONTO	ok
+Saldo de Salário		18	R$ 2.424,00	-		ok
+Aviso Prévio Indenizado		33	R$ 4.444,00			Verificar qual formato da data no paramento na formula
+13º Salário Proporcional	6/12	R$ 2.020,00	-		ok
+13º Salário Aviso Prévio	1/12	R$ 336,67	-
+Férias Vencidas			0	R$ 0,00	-			ok
+Férias Proporcionais		1/12	R$ 336,67	-		ok
+Férias sobre aviso prévio	1/12	R$ 336,67	-
+1/3 Férias			-	R$ 224,45	-
+INSS Salário*			TETO	-		R$ 713,08	ok
+IRRF Salário**			27.5%	-		R$ 823,24	ok
+INSS 13º Salário*		8.7%	-		R$ 204,42
+IRRF 13º Salário**		7.5%	-		R$ 18,62
+Total				-	R$ 10.122,46	R$ 1.759,36
