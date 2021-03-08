@@ -9,10 +9,76 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '06/03/2021'
-const motivo = 'Sem justa causa'
-const ferias = false
+const dataFim = '07/03/2021'
+const motivo = 'Dispensa sem justa causa'
+const ferias = true
 const aviso = false
+
+let totalProvento = 0
+let totalDesconto = 0
+let receber = 0
+
+//Identificar o motivo de desligamento e executar o simulador
+function motivoDesligamento ( motivo ){
+    switch ( motivo ){
+        case 'Pedido de Demissão':
+            console.log('Pedido')
+            break
+        case 'Dispensa sem justa causa': //Falta incluir aviso
+        if (ferias == false){
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(decimoTerceiro(dataFim, ultimoSalario)))
+            receber = totalProvento - totalDesconto
+            return receber
+        } else {
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + ultimoSalario
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(decimoTerceiro(dataFim, ultimoSalario)))
+            receber = totalProvento - totalDesconto
+            return receber
+        }            
+            break
+        case 'Dispensa com justa causa':
+            console.log('Sem justa causa')
+            break
+        case 'Término de Contrato de experiência':
+            console.log('Término de contrato')
+            break
+        case 'Rescisão antecipada do contrato de experiência pelo empregador':
+            console.log('Antecipada pelo empregador')
+            break
+        case 'Rescisão antecipada do contrato de experiência pelo empregado':
+            console.log('Antecipada pelo empregado')
+            break
+        default:
+            console.log('Motivo informado incorretamente!')
+    }
+}
+console.log(motivoDesligamento(motivo))
+
+//Ferias 1/3
+function feriasUmTerco(dataIn, dataFim, salario ) {
+    const dataFimSplit = dataFim.split('/')
+    const dataInSplit = dataIn.split('/')
+
+    const mesIn = Number(dataInSplit[1])
+    const mesFim = Number(dataFimSplit[1])
+
+    let meses = 0
+    let salarioReceber = 0
+
+    //Calcular mes
+    if ( mesIn > mesFim ){
+        meses = (12 - mesIn) +  mesFim
+    }else if( mesIn === mesFim ){
+        meses = 0
+    }else {
+        meses = mesFim - mesIn
+    }
+
+    salarioReceber = ((salario / 12) * (meses + 1)) / 3
+
+    return salarioReceber
+}
 
 //Calcular férias
 function feriasProporcionais( dataIn, dataFim, salario ) {
@@ -56,7 +122,7 @@ function feriasProporcionais( dataIn, dataFim, salario ) {
         salarioReceber = 0
     }
 
-    return console.log(`dias: ${dias}, Meses: ${meses}, Salario: ${salarioReceber}`)
+    return salarioReceber
 }
 
 //Calcular aviso Previo
@@ -114,34 +180,6 @@ function salarioDia ( dataFim, salario ){
 
     return salarioDiasTRabalhado
 }
-
-//Identificar o motivo de desligamento
-function motivoDesligamento ( motivo ){
-    switch ( motivo ){
-        case 'Pedido de Demissão':
-            console.log('Pedido')
-            break
-        case 'Dispensa sem justa causa':
-            console.log('Sem justa causa')
-            break
-        case 'Dispensa com justa causa':
-            console.log('Com justa causa')
-            break
-        case 'Término de Contrato de experiência':
-            console.log('Término de contrato')
-            break
-        case 'Rescisão antecipada do contrato de experiência pelo empregador':
-            console.log('Antecipada pelo empregador')
-            break
-        case 'Rescisão antecipada do contrato de experiência pelo empregado':
-            console.log('Antecipada pelo empregado')
-            break
-        default:
-            console.log('Motivo informado incorretamente!')
-    }
-}
-
-//motivoDesligamento('Pedido de Demissão')
 
 // Função para calcular INSS
 function inss ( salario ) {
