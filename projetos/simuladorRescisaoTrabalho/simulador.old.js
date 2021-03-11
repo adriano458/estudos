@@ -9,10 +9,10 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '07/03/2021'
+const dataFim = '10/03/2021'
 const motivo = 'Dispensa sem justa causa'
-const ferias = true
-const aviso = true
+const ferias = false
+const aviso = false
 
 let totalProvento = 0
 let totalDesconto = 0
@@ -26,12 +26,12 @@ function motivoDesligamento ( motivo ){
             break
         case 'Dispensa sem justa causa': //Falta incluir aviso
         if (ferias == false){
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso)
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + avisoPrevio(dataInicio, dataFim, ultimoSalario, aviso)
             totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(decimoTerceiro(dataFim, ultimoSalario)))
             receber = totalProvento - totalDesconto
             return receber
         } else {
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + ultimoSalario + avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso)
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + ultimoSalario
             totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(decimoTerceiro(dataFim, ultimoSalario)))
             receber = totalProvento - totalDesconto
             return receber
@@ -125,10 +125,8 @@ function feriasProporcionais( dataIn, dataFim, salario ) {
     return salarioReceber
 }
 
-//Caclular dias
-function diasTrabalho ( dataIn, dataFim){
-    //const date1 = new Date(dataIn)
-    //const date2 = new Date(dataFim);
+//Calcular aviso Previo
+function avisoPrevio( dataIn, dataFim, salario ) {
     const dataInSplit = dataIn.split('/')
     const dataFimSplit = dataFim.split('/')
 
@@ -140,32 +138,29 @@ function diasTrabalho ( dataIn, dataFim){
     const mesIn = dataInSplit[1]
     const anoIn = dataInSplit[2]
 
-    const date1 = new Date(anoIn, mesIn - 1, diaIn);
-    const date2 = new Date(anoFim, mesFim - 1, diaFim);
+    const data1 = new Date(anoIn, mesIn - 1, diaIn);
+    const data2 = new Date(anoFim, mesFim - 1, diaFim);
 
-    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+    const diff = Math.abs(data1.getTime() - data2.getTime());
+    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-    return diffDays
-}
-
-//Calcular aviso Previo
-function avisoPrevio ( diffDays, salario, aviso ){
-    const anos = diffDays / 365
-    const salarioAodia = salario / 30
     let valorAviso = 0
 
-    if( aviso === true && diffDays >= 365 ){
+    if( diffDays >= 365 && aviso === true){
+        const anos = diffDays / 365
+        const salarioAodia = salario / 30
+
         for (let i = 0; i < anos.toFixed(0); i++){
-            valorAviso += salarioAodia*3
-        }
-        valorAviso += salario
-    } else if ( aviso === false && diffDays >= 365 ){
-        for(let i = 0; i < anos.toFixed(0); i++){
             valorAviso += salarioAodia * 3
         }
-    } else if (aviso === true && diffDays <= 365 ){
-        valorAviso = salario
+        valorAviso += salario
+    } else if ( diffDays >= 365 && aviso === false ){
+        const anos = diffDays / 365
+        const salarioAodia = salario / 30
+
+        for (let i = 0; i < anos.toFixed(0); i++){
+            valorAviso += salarioAodia * 3
+        }
     } else {
         valorAviso = 0
     }
@@ -173,22 +168,13 @@ function avisoPrevio ( diffDays, salario, aviso ){
 }
 
 //Calcular décimo terceiro Aviso Prévio
-function avisoPrevio13( avisoPrevio, dias, aviso){
-    let anos = dias / 365.5
-    let valorReceber = 0
-    if( aviso === false){
-        valorReceber = avisoPrevio / 12
-    } else if ( aviso === true ){
-        if ( anos >= 5){
-            valorReceber = avisoPrevio / 12
-        }
-    }else{
-        valorReceber = 0
-    }
-    return valorReceber
+function avisoPrevio13( avisoPrevio, aviso ){
+    const valorAviso = avisoPrevio() /12
+
+    return valorAviso
 }
-console.log(avisoPrevio13(avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso),)) // Ajustar dias
-//.log(avisoPrevio13(avisoPrevio(dataInicio, dataFim, ultimoSalario, aviso)))
+
+console.log(avisoPrevio13( avisoPrevio, true))
 
 //Calcular o décimo terceiro
 function decimoTerceiro( dataFim, salario){
