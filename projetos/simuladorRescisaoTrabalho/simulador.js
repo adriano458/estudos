@@ -9,14 +9,17 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '07/03/2021'
+const dataFim = '14/03/2021'
 const motivo = 'Dispensa sem justa causa'
-const ferias = true
-const aviso = true
+const ferias = false
+const aviso = false
 
+//Soma total para pagamento
 let totalProvento = 0
 let totalDesconto = 0
 let receber = 0
+
+const diasTrab = diasTrabalho(dataInicio, dataFim)
 
 //Identificar o motivo de desligamento e executar o simulador
 function motivoDesligamento ( motivo ){
@@ -24,14 +27,14 @@ function motivoDesligamento ( motivo ){
         case 'Pedido de Demissão':
             console.log('Pedido')
             break
-        case 'Dispensa sem justa causa': //Falta incluir aviso
+        case 'Dispensa sem justa causa':  // Falta incluir aviso previo de ferias e 13°
         if (ferias == false){
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(decimoTerceiro(dataFim, ultimoSalario)))
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + (feriasProporcionais(dataInicio, dataFim, ultimoSalario) / 3) + avisoPrevio(diasTrab, ultimoSalario, aviso)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario))) + inss(avisoPrevio(diasTrab, ultimoSalario, aviso)) 
             receber = totalProvento - totalDesconto
             return receber
-        } else {
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + ultimoSalario + avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso)
+        } else { // revisar essa parte
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + ultimoSalario + avisoPrevio(diasTrab, ultimoSalario, aviso) + avisoPrevio13(diasTrab, aviso)
             totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(decimoTerceiro(dataFim, ultimoSalario)))
             receber = totalProvento - totalDesconto
             return receber
@@ -155,16 +158,16 @@ function avisoPrevio ( diffDays, salario, aviso ){
     const salarioAodia = salario / 30
     let valorAviso = 0
 
-    if( aviso === true && diffDays >= 365 ){
+    if( aviso === false && diffDays >= 365 ){
         for (let i = 0; i < anos.toFixed(0); i++){
             valorAviso += salarioAodia*3
         }
         valorAviso += salario
-    } else if ( aviso === false && diffDays >= 365 ){
+    } else if ( aviso === true && diffDays >= 365 ){
         for(let i = 0; i < anos.toFixed(0); i++){
             valorAviso += salarioAodia * 3
         }
-    } else if (aviso === true && diffDays <= 365 ){
+    } else if (aviso === false && diffDays <= 365 ){
         valorAviso = salario
     } else {
         valorAviso = 0
@@ -173,22 +176,20 @@ function avisoPrevio ( diffDays, salario, aviso ){
 }
 
 //Calcular décimo terceiro Aviso Prévio
-function avisoPrevio13( avisoPrevio, dias, aviso){
+function avisoPrevio13( dias, avisoIn ){
     let anos = dias / 365.5
     let valorReceber = 0
-    if( aviso === false){
-        valorReceber = avisoPrevio / 12
-    } else if ( aviso === true ){
+    if( avisoIn === false){
+        valorReceber = decimoTerceiro(dataFim, avisoPrevio(diasTrab,ultimoSalario,aviso))
+    } else if ( avisoIn === true ){
         if ( anos >= 5){
-            valorReceber = avisoPrevio / 12
+            valorReceber = decimoTerceiro(dataFim, avisoPrevio(diasTrab,ultimoSalario,aviso))
         }
     }else{
         valorReceber = 0
     }
     return valorReceber
 }
-console.log(avisoPrevio13(avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso),)) // Ajustar dias
-//.log(avisoPrevio13(avisoPrevio(dataInicio, dataFim, ultimoSalario, aviso)))
 
 //Calcular o décimo terceiro
 function decimoTerceiro( dataFim, salario){
@@ -239,12 +240,10 @@ function irrf ( salario, inss ) {
         irrf = (baseCalculo * 0.15) - 354.80
     } else if ( baseCalculo >= 3751.06 && baseCalculo <= 4664.68 ){
         irrf = (baseCalculo * 0.225) - 636.13
-    } else {
+    } else if ( baseCalculo >= 4664.89) {
         irrf = (baseCalculo * 0.275) - 869.36
+    } else {
+        irrf = 0
     }
     return irrf
 }
-
-//console.log(irrf(4040, inss(4040)))
-
-//console.log(simulador(2650, '01/06/2020', '25/02/2021', 'Sem justa causa', false, false))
