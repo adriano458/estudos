@@ -10,13 +10,15 @@
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
 const dataFim = '20/07/2021'
-const motivo = 2
-const ferias = false    //false Não tem férias | true possuir férias atrasada
-const aviso = true   //false trabalhado | true indenizado
+const motivo = 2            //Informar o motivo por número ou frase
+const ferias = true         //false Não tem férias | true possuir férias atrasada
+const aviso = false         //false trabalhado | true indenizado
 
 //Soma total para pagamento
 let totalProvento = 0
 let totalDesconto = 0
+let indenizado = 0
+let descIndenizado = 0
 let receber = 0
 
 //Identificar o motivo de desligamento e executar o simulador
@@ -47,19 +49,22 @@ function motivoDesligamento ( motivo ){
 
             totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
             totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
-            const indenizado = avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso) + avisoPrevio13(dataInicio, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + (feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) / 3 )
-            const descIndenizado = inss(avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso))
-            
+            indenizado = avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso) + avisoPrevio13(dataInicio, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + (feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) / 3 )
+            descIndenizado = inss(avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso))
+        
             receber = totalProvento - totalDesconto
 
             if ( aviso === true && ferias === false ){
                 receber += (indenizado - descIndenizado)
                 return receber.toFixed(2)
             } else if ( aviso === true && ferias === true ){
-                receber += ((indenizado - descIndenizado) + ultimoSalario)
+                receber += ((indenizado - descIndenizado) + ultimoSalario + (ultimoSalario / 3))
                 return receber.toFixed(2)
-            } else if (aviso === false && ferias === false){
-                return receber
+            } else if (aviso === false && ferias === true){
+                receber += (ultimoSalario + (ultimoSalario / 3))
+                return receber.toFixed(2)
+            } else {
+                return receber.toFixed(2)
             }
             break
 
@@ -251,16 +256,16 @@ function avisoPrevio ( diffDays, salario, aviso ){
     const salarioAodia = salario / 30
     let valorAviso = 0
 
-    if( aviso === false && diffDays >= 365 ){
+    if( aviso === true && diffDays >= 365 ){
         for (let i = 0; i < anos.toFixed(0); i++){
             valorAviso += salarioAodia*3
         }
         valorAviso += salario
-    } else if ( aviso === true && diffDays >= 365 ){
+    } else if ( aviso === false && diffDays >= 365 ){
         for(let i = 0; i < anos.toFixed(0); i++){
-            valorAviso += salarioAodia * 3
+            valorAviso += (salarioAodia * 3)
         }
-    } else if (aviso === false && diffDays <= 365 ){
+    } else if (aviso === true && diffDays <= 365 ){
         valorAviso = salario
     } else {
         valorAviso = 0
