@@ -1,6 +1,6 @@
 /* Simulador de Rescisão de Contrato de Trabalho.
 * Data início: 25/02/2021
-* Data final: 
+* Data final: 20/03/2021
 * Projeto: Relizar uma página, onde os clientes da JCA Contadores, irão realizar o acesso para simular rescisão de contrato, com isso irá 
 * diminuir as solicitações por telefone.
 * Observação: É necessário incluir impressão em PDF e com a informação bem clara, que o resultado não é oficial, apenas uma base de simulação
@@ -9,48 +9,108 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '14/03/2021'
-const motivo = 'Dispensa sem justa causa'
-const ferias = false
-const aviso = false
+const dataFim = '20/07/2021'
+const motivo = 2
+const ferias = false    //false Não tem férias | true possuir férias atrasada
+const aviso = true   //false trabalhado | true indenizado
 
 //Soma total para pagamento
 let totalProvento = 0
 let totalDesconto = 0
 let receber = 0
 
-const diasTrab = diasTrabalho(dataInicio, dataFim)
-
 //Identificar o motivo de desligamento e executar o simulador
 function motivoDesligamento ( motivo ){
     switch ( motivo ){
-        case 'Pedido de Demissão':
-            console.log('Pedido')
-            break
-        case 'Dispensa sem justa causa':  // Falta incluir aviso previo de ferias e 13°
-        if (ferias == false){
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + (feriasProporcionais(dataInicio, dataFim, ultimoSalario) / 3) + avisoPrevio(diasTrab, ultimoSalario, aviso)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario))) + inss(avisoPrevio(diasTrab, ultimoSalario, aviso)) 
+        case 'Pedido de Demissão': case 1:
+
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
             receber = totalProvento - totalDesconto
-            return receber
-        } else { // revisar essa parte
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario) + ultimoSalario + avisoPrevio(diasTrab, ultimoSalario, aviso) + avisoPrevio13(diasTrab, aviso)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(ultimoSalario)) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(ultimoSalario, inss(decimoTerceiro(dataFim, ultimoSalario)))
+
+            if( aviso === true && ferias === false){
+                receber -= ultimoSalario 
+                return receber.toFixed(2)
+            } else if ( aviso === true && ferias === true ){
+                receber += (ultimoSalario + (ultimoSalario / 3))
+                return receber.toFixed(2)
+            } else if ( aviso === false && ferias === true) {
+                receber += ((ultimoSalario + (ultimoSalario / 3)) - ultimoSalario)
+                return receber.toFixed(2)
+            } else {
+                receber -= ultimoSalario
+                return receber.toFixed(2)
+            }
+            break
+
+        case 'Dispensa sem justa causa':  case 2:
+
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            const indenizado = avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso) + avisoPrevio13(dataInicio, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + (feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) / 3 )
+            const descIndenizado = inss(avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso))
+            
             receber = totalProvento - totalDesconto
+
+            if ( aviso === true && ferias === false ){
+                receber += (indenizado - descIndenizado)
+                return receber.toFixed(2)
+            } else if ( aviso === true && ferias === true ){
+                receber += ((indenizado - descIndenizado) + ultimoSalario)
+                return receber.toFixed(2)
+            } else if (aviso === false && ferias === false){
+                return receber
+            }
+            break
+
+        case 'Dispensa com justa causa': case 3:
+            
+            totalProvento = salarioDia(dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario)))
+            receber = totalProvento - totalDesconto
+
+            return receber.toFixed(2)
+            break
+
+        case 'Término de Contrato de experiência': case 4:
+
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            receber = totalProvento - totalDesconto
+
+            if ( ferias === true ){
+                receber += ultimoSalario
+                return receber.toFixed(2)
+            } else {
+                return receber.toFixed(2)
+            }
+
+            break
+
+        case 'Rescisão antecipada do contrato de experiência pelo empregador': case 5:
+
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            receber = totalProvento - totalDesconto
+
+            if ( ferias === true ){
+                receber += ((ultimoSalario + (ultimoSalario / 3)) + ( ultimoSalario / 2 ))
+                return receber
+            } else {
+                receber += (ultimoSalario / 2)
+                return receber
+            }
+
+            break
+        case 'Rescisão antecipada do contrato de experiência pelo empregado': case 6:
+
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) //+ feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            receber = totalProvento - totalDesconto
+            receber -= (ultimoSalario / 2)
+
             return receber
-        }            
-            break
-        case 'Dispensa com justa causa':
-            console.log('Sem justa causa')
-            break
-        case 'Término de Contrato de experiência':
-            console.log('Término de contrato')
-            break
-        case 'Rescisão antecipada do contrato de experiência pelo empregador':
-            console.log('Antecipada pelo empregador')
-            break
-        case 'Rescisão antecipada do contrato de experiência pelo empregado':
-            console.log('Antecipada pelo empregado')
+
             break
         default:
             console.log('Motivo informado incorretamente!')
@@ -128,6 +188,39 @@ function feriasProporcionais( dataIn, dataFim, salario ) {
     return salarioReceber
 }
 
+//Calcular férias sobre dias de aviso Indenizado
+function feriasAvisoPrevio (dataIn, dataFim, salario, dias){
+    const dataInSplit = dataIn.split('/')
+    const dataFimSplit = dataFim.split('/')
+    const diaIn = Number(dataInSplit[0])
+    const diaFim = Number(dataFimSplit[0])
+
+    let qtdDias = 0
+    let anos = dias / 365.5
+    let contador = 0
+    let medidor = 14
+    let valorReceber = 0
+
+    if( diaFim > diaIn ){
+        qtdDias = diaFim - diaIn
+    }else{
+        qtdDias = diaIn - diaFim
+    }
+
+    for(let i = 0; i < anos.toFixed(0); i++){
+        qtdDias +=3
+    }
+
+    while (qtdDias > medidor){
+        contador++
+        medidor += 30
+    }
+
+    valorReceber = (salario / 12) * contador
+
+    return valorReceber
+}
+
 //Caclular dias
 function diasTrabalho ( dataIn, dataFim){
     //const date1 = new Date(dataIn)
@@ -176,18 +269,30 @@ function avisoPrevio ( diffDays, salario, aviso ){
 }
 
 //Calcular décimo terceiro Aviso Prévio
-function avisoPrevio13( dias, avisoIn ){
+function avisoPrevio13( dataIn, salario, dias ){
+    const diaInSplit = dataIn.split('/')
+    const diaIn = Number(diaInSplit[0])
+    
+    let qtdDias = 0
     let anos = dias / 365.5
+    let dataInEdiasIndenizado = 0
+    let medidor = 15
+    let contador = 0
     let valorReceber = 0
-    if( avisoIn === false){
-        valorReceber = decimoTerceiro(dataFim, avisoPrevio(diasTrab,ultimoSalario,aviso))
-    } else if ( avisoIn === true ){
-        if ( anos >= 5){
-            valorReceber = decimoTerceiro(dataFim, avisoPrevio(diasTrab,ultimoSalario,aviso))
-        }
-    }else{
-        valorReceber = 0
+
+    for(let i = 0; i < anos.toFixed(0); i++){
+        qtdDias += 3
     }
+
+    dataInEdiasIndenizado = diaIn + qtdDias
+
+    while( medidor < dataInEdiasIndenizado ){
+        contador++
+        medidor += 30
+    }
+
+    valorReceber = (salario / 12) * (contador + 1)
+
     return valorReceber
 }
 
@@ -246,4 +351,13 @@ function irrf ( salario, inss ) {
         irrf = 0
     }
     return irrf
+}
+
+function fgts ( dias, salario ){
+    const meses = dias / 30.40
+    const saldoFGTS = salario * 0.08
+    const valorFGTS = saldoFGTS * meses.toFixed(0)
+    const valor40Receber = valorFGTS * 0.41
+
+    return valor40Receber
 }
