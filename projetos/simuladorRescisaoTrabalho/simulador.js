@@ -9,7 +9,7 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '20/07/2021'
+const dataFim = '21/03/2021'
 const motivo = 2            //Informar o motivo por número ou frase
 const ferias = true         //false Não tem férias | true possuir férias atrasada
 const aviso = false         //false trabalhado | true indenizado

@@ -29,6 +29,9 @@ git status
 //Adicionar arquivos não monitorados
 git add . (ponto significar adicionar tudo)
 
+//Instalação do express (Tem que está dentro da pasta do projeto)
+npm i --save express@4.16.2 -E (@4.16.2 --> é a versão exata que deseja instalar e o -E utilizado para não ter nenhuma modificação da instalação).
+
 //Comitar para monitoramento das alterações
 git commit -m "(descrição)"
 
