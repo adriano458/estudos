@@ -9,10 +9,10 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '21/03/2021'
-const motivo = 2            //Informar o motivo por número ou frase
+const dataFim = '01/07/2021'
+const motivo = 3             //Informar o motivo por número ou frase
 const ferias = true         //false Não tem férias | true possuir férias atrasada
-const aviso = false         //false trabalhado | true indenizado
+const aviso = true          //false trabalhado | true indenizado
 
 //Soma total para pagamento
 let totalProvento = 0
@@ -33,14 +33,13 @@ function motivoDesligamento ( motivo ){
             if( aviso === true && ferias === false){
                 receber -= ultimoSalario 
                 return receber.toFixed(2)
-            } else if ( aviso === true && ferias === true ){
-                receber += (ultimoSalario + (ultimoSalario / 3))
+            } else if ( aviso === false && ferias === false ){
                 return receber.toFixed(2)
             } else if ( aviso === false && ferias === true) {
-                receber += ((ultimoSalario + (ultimoSalario / 3)) - ultimoSalario)
+                receber += (ultimoSalario + (ultimoSalario / 3))
                 return receber.toFixed(2)
             } else {
-                receber -= ultimoSalario
+                receber -= ((ultimoSalario + (ultimoSalario / 3)) - ultimoSalario)
                 return receber.toFixed(2)
             }
             break
@@ -74,7 +73,12 @@ function motivoDesligamento ( motivo ){
             totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario)))
             receber = totalProvento - totalDesconto
 
-            return receber.toFixed(2)
+            if( ferias === true ){
+                receber += (ultimoSalario + (ultimoSalario / 3))
+                return receber.toFixed(2)
+            } else {
+                return receber.toFixed(2)
+            }
             break
 
         case 'Término de Contrato de experiência': case 4:
