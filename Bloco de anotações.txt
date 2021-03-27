@@ -72,3 +72,6 @@ npm init -y
 
 //criando dependencias
 npm i --save axios
+
+//Pacote do node, para utulizar como agenda(temporizador)
+npm i node-schedule@1.3.0 -E

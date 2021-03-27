@@ -9,8 +9,8 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '01/07/2021'
-const motivo = 3             //Informar o motivo por número ou frase
+const dataFim = '01/09/2020'
+const motivo = 4             //Informar o motivo por número ou frase
 const ferias = true         //false Não tem férias | true possuir férias atrasada
 const aviso = true          //false trabalhado | true indenizado
 
@@ -26,8 +26,8 @@ function motivoDesligamento ( motivo ){
     switch ( motivo ){
         case 'Pedido de Demissão': case 1:
 
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, dataInicio, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
             receber = totalProvento - totalDesconto
 
             if( aviso === true && ferias === false){
@@ -46,8 +46,8 @@ function motivoDesligamento ( motivo ){
 
         case 'Dispensa sem justa causa':  case 2:
 
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, dataInicio, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)))
             indenizado = avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso) + avisoPrevio13(dataInicio, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) + (feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario, diasTrabalho(dataInicio, dataFim)) / 3 )
             descIndenizado = inss(avisoPrevio(diasTrabalho(dataInicio, dataFim), ultimoSalario, aviso))
         
@@ -83,8 +83,8 @@ function motivoDesligamento ( motivo ){
 
         case 'Término de Contrato de experiência': case 4:
 
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, dataInicio, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)))
             receber = totalProvento - totalDesconto
 
             if ( ferias === true ){
@@ -98,8 +98,8 @@ function motivoDesligamento ( motivo ){
 
         case 'Rescisão antecipada do contrato de experiência pelo empregador': case 5:
 
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, dataInicio, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)))
             receber = totalProvento - totalDesconto
 
             if ( ferias === true ){
@@ -113,8 +113,8 @@ function motivoDesligamento ( motivo ){
             break
         case 'Rescisão antecipada do contrato de experiência pelo empregado': case 6:
 
-            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, ultimoSalario) //+ feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, ultimoSalario)) + irrf(decimoTerceiro(dataFim, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, dataInicio, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco(dataInicio, dataFim, ultimoSalario)
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)))
             receber = totalProvento - totalDesconto
             receber -= (ultimoSalario / 2)
 
@@ -306,18 +306,30 @@ function avisoPrevio13( dataIn, salario, dias ){
 }
 
 //Calcular o décimo terceiro
-function decimoTerceiro( dataFim, salario){
+function decimoTerceiro( dataFim, dataIn, salario){
     const dtFim = dataFim.split('/')
-
-    if( dtFim[0] > 15){
-        const mesesTrabalhado = (salario / 12) * dtFim[1]
-        
-        return mesesTrabalhado
-    } else{
-        const mesesTrabalhado = ((salario / 12) * (dtFim[1] - 1))
-
-        return mesesTrabalhado
-    }
+    const dtIn = dataIn.split('/')
+    let mesTrabalhado = 0
+/*
+    if ( dtIn[2] === dtFim[2] ) {
+        if ( dtFim[0 > 15] && mes > 0 ){
+            mes = Number(dtFim[1]) - Number(dtIn[1])
+            mesTrabalhado = (salario / 12) * mes
+        } else if ( dtFim[0 > 15] && mes === 0 ){
+            mesTrabalhado = (salario / 12) * 1
+        } else {
+            mesTrabalhado = ((salario / 12) * (mes - 1))
+        }
+    } else {
+        if ( dtFim[0 > 15] && mes > 0 ){
+            mes = Number(dtFim[1]) - Number(dtIn[1])
+            mesTrabalhado = (salario / 12) * mes
+        } else if ( dtFim[0 > 15] && mes === 0 ){
+            mesTrabalhado = (salario / 12) * 1
+        } else {
+            mesTrabalhado = ((salario / 12) * (mes - 1))
+    }*/
+    return mesTrabalhado
 }
 
 // Calcular Salario de dias trabalho no mês
