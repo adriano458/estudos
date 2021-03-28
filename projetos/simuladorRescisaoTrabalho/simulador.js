@@ -22,7 +22,7 @@ let descIndenizado = 0
 let receber = 0
 
 //Identificar o motivo de desligamento e executar o simulador
-function motivoDesligamento ( motivo ){
+const motivoDesligamento = ( motivo ) => {
     switch ( motivo ){
         case 'Pedido de Demissão': case 1:
 
