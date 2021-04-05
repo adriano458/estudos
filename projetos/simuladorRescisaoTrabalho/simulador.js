@@ -9,8 +9,8 @@
 //Receber as variaveis
 const ultimoSalario = 4040
 const dataInicio = '01/06/2020'
-const dataFim = '01/09/2020'
-const motivo = 2             //Informar o motivo por número ou frase
+const dataFim = '29/03/2021'
+const motivo = 1             //Informar o motivo por número ou frase
 const ferias = false         //false Não tem férias | true possuir férias atrasada
 const aviso = false          //false trabalhado | true indenizado
 
@@ -27,7 +27,7 @@ const motivoDesligamento = ( motivo ) => {
         case 'Pedido de Demissão': case 1:
 
             totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, dataInicio, ultimoSalario) + feriasProporcionais(dataInicio, dataFim, ultimoSalario) + feriasUmTerco()
-            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, ultimoSalario)))
+            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)))
             receber = totalProvento - totalDesconto
 
             if( aviso === true && ferias === false){
@@ -48,7 +48,7 @@ const motivoDesligamento = ( motivo ) => {
 
            totalProvento = salarioDia(dataFim, ultimoSalario) + decimoTerceiro(dataFim, dataInicio, ultimoSalario) + feriasProporcionais (dataInicio, dataFim, ultimoSalario) + feriasUmTerco()
            totalDesconto = inss(salarioDia(dataFim, ultimoSalario)) + irrf(salarioDia(dataFim, ultimoSalario), inss(salarioDia(dataFim, ultimoSalario))) + inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)) + irrf(decimoTerceiro(dataFim, dataInicio, ultimoSalario), inss(decimoTerceiro(dataFim, dataInicio, ultimoSalario)))
-           indenizado = avisoPrevio( ultimoSalario, aviso) + avisoPrevio13(dataInicio, ultimoSalario) + feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario) //+ (feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario) / 3 )
+           indenizado = avisoPrevio( ultimoSalario, aviso) + avisoPrevio13(dataInicio, ultimoSalario) + feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario) + (feriasAvisoPrevio(dataInicio, dataFim, ultimoSalario) / 3 )
            descIndenizado = inss(avisoPrevio(ultimoSalario, aviso))
         
             receber = totalProvento - totalDesconto
