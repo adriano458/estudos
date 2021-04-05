@@ -75,3 +75,12 @@ npm i --save axios
 
 //Pacote do node, para utulizar como agenda(temporizador)
 npm i node-schedule@1.3.0 -E
+
+// Instalar servidor http do node
+npm i -g http-server
+
+//Iniciar o server (tem que ser no CMD no code)
+http-server .
+
+//Retirar o cache do server
+http-server -c-1
