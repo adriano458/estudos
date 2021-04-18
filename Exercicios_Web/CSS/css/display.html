@@ -5,7 +5,30 @@
     <meta charset="UTF-8">
     <title>Display</title>
     <style>
-        /* ... */
+        body {
+            font-size: 40px;
+            color: #fff;
+            background-color: coral;
+        }
+
+        ul { padding: 0; }
+        div { background-color: seagreen; }
+        span { background-color: dodgerblue; }
+        li { background-color: purple; }
+
+        div, span, li {
+            width: 50%;
+            width: 200px;
+            height: 80px;
+            padding-top: 30px;
+            text-align: center;
+            display: inline-block;
+            /*
+                block -> Irá considerar todas as configurações, largura e altura, deixando todos organizado um de baixo do outro.
+                inline -> Irá descosiderar altura e permitindo apenas a largura. Deixando todos em linha.
+                inline-block -> Irá considerar todas as configurações de altura e largura, mas permitindo todos em linha.
+            */
+        }
     </style>
 </head>
 

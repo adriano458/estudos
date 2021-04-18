@@ -5,9 +5,16 @@
     <meta charset="UTF-8">
     <title>Altura e Largura</title>
     <style>
+        html {
+            height: 100%;
+            /*Para ocupar o preenchimento da altura de toda a página, é necessário incluir a tag no css "html" e informaar o tamanha*/
+        }
         body {
             font-size: 40px;
             background-color: coral;
+            margin: 0;
+            height: 100%;
+            /*Também é necessário informar 100% do tamanho no body, para que ocupe altura*/
         }
 
         div {
@@ -16,6 +23,13 @@
 
         span {
             background-color: dodgerblue;
+        }
+        span, div {
+            width: 50%;
+            height: 250px;
+            height: 50%; /*Prevalece o último height*/
+            display: block;
+            /*Displau: block, irá permitir o span ocupar os 50%, pós a tag "span" Não modificar altura e largura */
         }
     </style>
 </head>
