@@ -7,7 +7,86 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
-        /* ... */
+        body {
+            background-color: rgb(85, 87, 85);
+            margin: 0px;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .cabecalho {
+            height: 60px;
+            background-color: black;
+            color: #fff;
+            border-bottom: solid 4px steelblue;
+        }
+
+        .cabecalho a {
+            text-decoration: none;
+            color: #eee;
+            font-size: 1.3em;
+            padding: 10px 15px;
+        }
+
+        .logo img {
+            position: static;
+            width: 230px;
+            height: 45px;
+            padding: 5px 5px;
+        }
+
+        @media (min-width: 600px){
+        .menu {
+            position: absolute;
+            top: 15px;
+            left: 300px;
+        }
+
+        .menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu li {
+            display: inline-block;
+        }
+
+        .menu a:hover {
+            background-color: burlywood;
+            color: black
+        }
+
+        .cabecalho .botao {
+            border-radius: 30px;
+            padding: 10px 15pxpx;
+            margin-right: 15px;
+        }
+
+        .destaque {
+            background-color: firebrick;
+            color: #fff;
+        }
+
+        .autenticacao {
+            position: absolute;
+            right: 10px;
+            top: 15px;
+        }
+        
+        .menu-toggle {
+            display: none;
+        }
+        }
+
+        @media(max-width: 600px){
+            .menu-toggle {
+                position: absolute;
+                right: 10px;
+                top: 20px;
+            }
+
+        }
+
     </style>
 </head>
 
