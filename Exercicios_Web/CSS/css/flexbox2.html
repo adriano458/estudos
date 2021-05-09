@@ -6,7 +6,51 @@
     <title>Flexbox #02</title>
     <link rel="stylesheet" href="css/tag.css">
     <style>
-        /* ... */
+        div {
+            border: solid 5px dodgerblue;
+            font-size: 40px;
+        }
+
+        .flex-container div {
+            box-sizing: border-box;
+        }
+
+        .flex-container {
+            display: flex;
+            height: 300px;
+            width: 600px;
+        }
+
+        .flex-container div:nth-child(3) {
+            background-color: indianred;
+            order: 1; /*Fica último elemento da div*/
+            order: 0; /*Permanace a ordem do HTML*/
+            order: -1; /*Fica sendo o primeiro elemento da div*/
+            align-self: center; /*centralizar*/
+            align-self: flex-end; /*final*/
+            align-self: flex-start; /*inicio*/
+            align-self: stretch; /*permanece a configuração do html*/
+        }
+
+        .flex-container div {
+            width: 100px;
+            flex-grow: 0;
+            flex-grow: 1;
+        }
+
+        .flex-container div:nth-child(1){
+            flex-grow: 2; /*deixa a 1° div maior que as demais*/
+        }
+
+        .flex-container{
+            width: 300px;
+            flex-shrink: 1; /*irá diminir todos por igual*/
+        }
+
+        .flex-container div:nth-child(1) {
+            flex-shrink: 5; /*irá dividir por 8 (5 da div 1 e mais 3 div)*/
+        }
+
     </style>
 </head>
 

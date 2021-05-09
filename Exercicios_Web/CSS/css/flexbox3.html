@@ -6,7 +6,29 @@
     <title>Flexbox #03</title>
     <link rel="stylesheet" href="css/tag.css">
     <style>
-        /* ... */
+        div {
+            border: solid 5px dodgerblue;
+            font-size: 40px;
+        }
+
+        .flex-container div {
+            box-sizing: border-box;
+            flex-direction: column; /*passa ser coluna*/
+            flex-direction: row; /*passa ser linha*/
+        }
+
+        .flex-container {
+            display: flex; /*coloca todos os elementos em linha*/
+        }   
+
+        .flex-container div {
+            flex-basis: 100px;/*irá definir o tamanho de acordo com flex-direction*/
+        }
+
+        .flex-container div:nth-child(4) {
+            flex: 3 6 100px;
+            /*se o tamanho da dv for grande das demais, irá usar o 3, mas se as demais div for menor que ela, irá usar 6*/
+        }
     </style>
 </head>
 

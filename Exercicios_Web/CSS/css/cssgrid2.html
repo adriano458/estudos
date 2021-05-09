@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>CSS Grid #02</title>
     <style>
-        html,
+        html, 
         body {
             margin: 20px;
             height: calc(100% - 40px);
@@ -19,6 +19,28 @@
             font-size: 30px;
             border: solid 5px dodgerblue;
             background: #fff;
+        }
+
+        body{
+            display: grid;
+            grid-template-columns: [inicio] 1fr 
+            [metade-1 meio-1] 1fr 
+            [metade-2 meio-2] 1fr [fim];
+            grid-template-rows: repeat(3, 1fr);
+            /*Gap é o espaçamento entre linhas e colunas*/
+            grid-column-gap: 20px;
+            grid-row-gap: 20px;
+            grid-gap: 50px 10px;
+            grid-gap: 10px;/*espaçamento em coluna e linhas por igual*/
+        }
+
+        .d1 {
+            grid-column-start: metade-2;
+            grid-column-end: fim;
+            grid-column: meio-1 / fim;
+            grid-row: 1 / span2;
+            /* row-star column-start row-end column-end --> tem que ser usado nesta seguência */
+            grid-area: 1 / meio / span 3 / fim;
         }
     </style>
 </head>

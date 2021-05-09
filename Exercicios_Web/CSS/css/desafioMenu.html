@@ -34,7 +34,6 @@
             padding: 5px 5px;
         }
 
-        @media (min-width: 600px){
         .menu {
             position: absolute;
             top: 15px;
@@ -51,7 +50,8 @@
             display: inline-block;
         }
 
-        .menu a:hover {
+        .menu a:hover,
+        .menu a.selected {
             background-color: burlywood;
             color: black
         }
@@ -72,19 +72,27 @@
             right: 10px;
             top: 15px;
         }
-        
+
+        @media (min-width: 679x){
         .menu-toggle {
             display: none;
-        }
+            }
         }
 
-        @media(max-width: 600px){
-            .menu-toggle {
-                position: absolute;
-                right: 10px;
-                top: 20px;
+        @media(max-width: 680px){
+        .menu {
+             display: none;   
             }
 
+        .menu-toggle {
+            display: inline-block;
+        }
+        }
+
+        @media(max-width: 910px){
+            .autenticacao {
+                display: none;
+            }
         }
 
     </style>
@@ -123,7 +131,15 @@
     </header>
 
     <script>
-        // ...
+        window.onhashchange = function(e) {
+            const oldURL = e.oldURL.split('#')[1]
+            const newURL = e.newURL.split('#')[1]
+            console.log(oldURL, newURL)
+            const oldMenu = document.querySelector(`.menu a[href='#${oldURL}']`)
+            const newMenu = document.querySelector(`.menu a[href='#${newURL}']`)
+            oldMenu && oldMenu.classList.remove('selected')
+            newMenu && newMenu.classList.add('selected')
+        }
     </script>
 </body>
 

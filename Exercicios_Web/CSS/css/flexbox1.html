@@ -6,7 +6,57 @@
     <title>Flexbox #01</title>
     <link rel="stylesheet" href="css/tag.css">
     <style>
-        /* ... */
+        div {
+            border: solid 5px dodgerblue;
+            font-size: 40px;
+            margin: 5px;
+        }
+
+        .big {
+            font-size: 1.5em;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            /*flex-direction: column-reverse; 
+            Você mudar a ordem, último passar ser primeiro
+            e o primeiro o último */
+            /*flex-direction: row-severse;
+            A linha passa começar da direita para esquerda */
+            flex-direction: row; /*Padrão - Linha */
+            width: 50%;
+            flex-wrap: wrap; /* Quebra de linha */
+            /* flex-wrap: wrap-reverse; mudar a ordem da linha */
+            flex-flow: column-reverse; /*Vai começar de baixo para cima
+            e vai esconder o que ficar fora da div */
+            flex-flow: column-reverse wrap; /* coluna reverso, começando
+            da esquerda para direita e ocupando todos os espaços */
+            flex-flow: row wrap;
+
+            justify-content: flex-start; /* iniciar da esquerda */
+            justify-content: flex-end; /* iniciar da direita */
+            justify-content: center; /*centralizar*/
+            justify-content: space-around; /*espaço entre os elementos, para ficar do tamanho do contender */
+            justify-content: row-reverse;
+            justify-content: space-between; /*ocupando as extremidades*/
+
+            /*cros Axis */
+            height: 400px;
+            align-items: stretch;
+            align-items: baseline; /*Alinha a linha com a base */
+            align-items: flex-start; /*Alinha por cima */
+            align-items: flex-end; /*Alinha no final*/
+            align-items: center; /*Alinha pelo o centro dos itens*/
+            
+            /*Mais de uma linha*/
+            align-content: flex-start; /*Todas as linhas irão para o inicio contender*/
+            align-content: flex-end; /*Todas as linhas irão para o final*/
+            align-content: center;
+            align-content: space-around;
+            align-content: space-between;
+        }
+        
     </style>
 </head>
 
