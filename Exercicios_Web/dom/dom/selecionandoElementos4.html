@@ -22,7 +22,37 @@
         <p>Fim</p>
     </div>
     <script>
-        // ...
+        function log() {
+            console.log(this)
+        }
+
+        HTMLCollection.prototype.log = log
+        HTMLElement.prototype.log = log
+        NodeList.prototype.log = log
+        Node.prototype.log = log
+
+        const lista = document.querySelector('div ul')
+        lista.parentNode.log()//Selecinar o "pai", neste caso a Div, pós está acima da "ul"
+        lista.childNodes.log()//Seleciona o filho, abaixo da Ul, neste caso a Li, porém o Node trás com espaço, informando o como text.
+
+        //pega o primeiro nome da lista
+        const primeiro = lista.firstChild
+        primeiro.log()
+        primeiro.nextSibling.log()
+
+        //Pega o último elemento da lista
+        const ultimo = lista.lastChild
+        ultimo.log()
+        ultimo.previousSibling.log()
+
+        lista.children.log()
+        lista.firstElementChild.log()
+        lista.lastElementChild.log()
+        lista.parentNode.previousElementSibling.log()
+        lista.parentNode.NextElementSibling.log()
+
+        //Pega o elemento da lista. Mas curta e direta!
+        document.querySelectorAll('div ul li').log()
     </script>
 </body>
 
