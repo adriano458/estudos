@@ -17,7 +17,26 @@
         </ul>
     </div>
     <script>
-        // ...
+        const lista = document.querySelector('#compras')
+        console.log('Elemento "url"................')
+        console.log('childNodes', lista.childNodes)
+        console.log('destino', lista.destino) //correto seria ('destino', lista.id)
+        console.log('getAttribute', lista.getAttribute('destino')) // dessa forma consegue acessar o elemento destino
+        console.log('hasAttribute', lista.hasAttribute('destino')) // Verifica se contém o "Destino"
+        lista.setAttribute('destino', 'empresa') //Set irá pegar o elemento destino e alterar pra empresa
+        lista.setAttribute('status', 'aberto') //Set pode alterar e também adicionar.
+        lista.removeAttribute('destino') //remove função para remoto o elemento.
+        console.log(lista.dataset)
+        console.log(lista.dataset.urgencia)
+        lista.dataset.urgencia = 4
+        console.log(lista.getAttribute('data-urgencia'))
+
+        //cuidado.
+        const label = document.querySelector('label')
+        console.log(label.for) //Não irá conseguir acessar, pois a palavra "for" é reservada da linguagem
+        console.log(label.htmlFor) //desta forma ou abaixo, conseguimos acessar atributo "for"
+        console.log(label.getAttribute('for'))
+        
     </script>
 </body>
 

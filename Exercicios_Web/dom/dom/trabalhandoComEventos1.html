@@ -9,9 +9,25 @@
 
 <body class="conteudo exercicio">
     <div>
-        <a href="https://google.com.br">Google</a>
+        <!-- onclick="navegarEm5s(event)" -->
+        <a espera-um-pouco href="https://google.com.br">Google</a>
     </div>
     <script>
-        // ...
+        function navegarEm5s(e) {
+            e.preventDefault()//Irá prevenir que o evento ocorrar
+            console.log('Saindo em 5s...')
+            setTimeout(() => {
+                window.location.href = e.target.href
+                //target é o elemento HTML que disparou o evento, sendo assim o e.target o link
+            }, 5000)
+        }
+
+        //const a = document.querySelector('a')
+        //a.onclick = navegarEm5s
+        
+        //Melhor maneira de utilizar o evento
+        const a = document.querySelector('[espera-um-pouco]')
+        a.onclick = navegarEm5s
+        //Essa maneira fica explícito que tem uma evento devito ao elemento no html 
     </script>
 </body>

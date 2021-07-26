@@ -9,8 +9,32 @@
 
 <body class='conteudo exercicio'>
     <script>
-        // ...
-    </script>
+        const body = document.querySelector('body')
+        
+        const div1 = document.createElement('div') //Criando a constante
+        div1.classList.add('destaque') //Adicionando a classe 'Destaque'
+        div1.innerHTML = 'Primeiro' //Conteúdo dentro da div
+
+        const div2 = document.createElement('div')
+        div2.setAttribute('wm-atributo', 'valor')
+        div2.innerHTML = 'Segundo'
+
+        const p = document.createElement('p')
+        p.innerHTML = 'Terceiro'
+        const div3 = document.createElement('div')
+        div3.appendChild(p)
+
+        body.appendChild(div1) //Está inserindo dentro da constante body
+        body.appendChild(div2)
+        body.appendChild(div3)
+
+        const texto = document.createTextNode('Antes....') //Criar elemento no formato texto
+        div3.insertBefore(texto, div3.childNodes[0]) //Insere o elemento como o primeiro dentro do contender
+
+        const div4 = div3.cloneNode(true) //Clona um elemento.
+        body.appendChild(div4)
+        body.removeChild(div3)
+        </script>
 </body>
 
 </html>
